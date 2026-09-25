@@ -1,37 +1,37 @@
 //
-//  SVProgressHUD.h
-//  SVProgressHUD, https://github.com/SVProgressHUD/SVProgressHUD
+//  TTDProgressHUD.h
+//  TTDProgressHUD, https://github.com/TTDProgressHUD/TTDProgressHUD
 //
 //  Copyright (c) 2011-2023 Sam Vermette and contributors. All rights reserved.
 //
 
 #if !__has_feature(objc_arc)
-#error SVProgressHUD is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
+#error TTDProgressHUD is ARC only. Either turn on ARC for the project or use -fobjc-arc flag
 #endif
 
-#import "SVProgressHUD.h"
-#import "SVIndefiniteAnimatedView.h"
-#import "SVProgressAnimatedView.h"
-#import "SVRadialGradientLayer.h"
+#import "TTDProgressHUD.h"
+#import "TTDIndefiniteAnimatedView.h"
+#import "TTDProgressAnimatedView.h"
+#import "TTDRadialGradientLayer.h"
 
-NSString * const SVProgressHUDDidReceiveTouchEventNotification = @"SVProgressHUDDidReceiveTouchEventNotification";
-NSString * const SVProgressHUDDidTouchDownInsideNotification = @"SVProgressHUDDidTouchDownInsideNotification";
-NSString * const SVProgressHUDWillDisappearNotification = @"SVProgressHUDWillDisappearNotification";
-NSString * const SVProgressHUDDidDisappearNotification = @"SVProgressHUDDidDisappearNotification";
-NSString * const SVProgressHUDWillAppearNotification = @"SVProgressHUDWillAppearNotification";
-NSString * const SVProgressHUDDidAppearNotification = @"SVProgressHUDDidAppearNotification";
+NSString * const TTDProgressHUDDidReceiveTouchEventNotification = @"TTDProgressHUDDidReceiveTouchEventNotification";
+NSString * const TTDProgressHUDDidTouchDownInsideNotification = @"TTDProgressHUDDidTouchDownInsideNotification";
+NSString * const TTDProgressHUDWillDisappearNotification = @"TTDProgressHUDWillDisappearNotification";
+NSString * const TTDProgressHUDDidDisappearNotification = @"TTDProgressHUDDidDisappearNotification";
+NSString * const TTDProgressHUDWillAppearNotification = @"TTDProgressHUDWillAppearNotification";
+NSString * const TTDProgressHUDDidAppearNotification = @"TTDProgressHUDDidAppearNotification";
 
-NSString * const SVProgressHUDStatusUserInfoKey = @"SVProgressHUDStatusUserInfoKey";
+NSString * const TTDProgressHUDStatusUserInfoKey = @"TTDProgressHUDStatusUserInfoKey";
 
-static const CGFloat SVProgressHUDParallaxDepthPoints = 10.0f;
-static const CGFloat SVProgressHUDUndefinedProgress = -1;
-static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15f;
-static const CGFloat SVProgressHUDVerticalSpacing = 12.0f;
-static const CGFloat SVProgressHUDHorizontalSpacing = 12.0f;
-static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
+static const CGFloat TTDProgressHUDParallaxDepthPoints = 10.0f;
+static const CGFloat TTDProgressHUDUndefinedProgress = -1;
+static const CGFloat TTDProgressHUDDefaultAnimationDuration = 0.15f;
+static const CGFloat TTDProgressHUDVerticalSpacing = 12.0f;
+static const CGFloat TTDProgressHUDHorizontalSpacing = 12.0f;
+static const CGFloat TTDProgressHUDLabelSpacing = 8.0f;
 
 
-@interface SVProgressHUD ()
+@interface TTDProgressHUD ()
 
 @property (nonatomic, strong) NSTimer *graceTimer;
 @property (nonatomic, strong) NSTimer *fadeOutTimer;
@@ -44,15 +44,15 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 @property (nonatomic, strong) UIControl *controlView;
 @property (nonatomic, strong) UIView *backgroundView;
-@property (nonatomic, strong) SVRadialGradientLayer *backgroundRadialGradientLayer;
+@property (nonatomic, strong) TTDRadialGradientLayer *backgroundRadialGradientLayer;
 @property (nonatomic, strong) UIVisualEffectView *hudView;
 @property (nonatomic, strong) UIBlurEffect *hudViewCustomBlurEffect;
 @property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic, strong) UIView *indefiniteAnimatedView;
-@property (nonatomic, strong) SVProgressAnimatedView *ringView;
-@property (nonatomic, strong) SVProgressAnimatedView *backgroundRingView;
+@property (nonatomic, strong) TTDProgressAnimatedView *ringView;
+@property (nonatomic, strong) TTDProgressAnimatedView *backgroundRingView;
 
 @property (nonatomic, readwrite) CGFloat progress;
 @property (nonatomic, readwrite) NSUInteger activityCount;
@@ -66,16 +66,16 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 @end
 
-@implementation SVProgressHUD {
+@implementation TTDProgressHUD {
     BOOL _isInitializing;
 }
 
-+ (SVProgressHUD*)sharedView {
++ (TTDProgressHUD*)sharedView {
     static dispatch_once_t once;
     
-    static SVProgressHUD *sharedView;
+    static TTDProgressHUD *sharedView;
 #if !defined(SV_APP_EXTENSIONS)
-     dispatch_once(&once, ^{ sharedView = [[self alloc] initWithFrame:[SVProgressHUD mainWindow].bounds]; });
+     dispatch_once(&once, ^{ sharedView = [[self alloc] initWithFrame:[TTDProgressHUD mainWindow].bounds]; });
 #else
     dispatch_once(&once, ^{ sharedView = [[self alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; });
 #endif
@@ -162,9 +162,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 #if defined(SWIFTPM_MODULE_BUNDLE)
      NSBundle *bundle = SWIFTPM_MODULE_BUNDLE;
 #else
-     NSBundle *bundle = [NSBundle bundleForClass:[SVProgressHUD class]];
+     NSBundle *bundle = [NSBundle bundleForClass:[TTDProgressHUD class]];
 #endif
-     NSURL *url = [bundle URLForResource:@"SVProgressHUD" withExtension:@"bundle"];
+     NSURL *url = [bundle URLForResource:@"TTDProgressHUD" withExtension:@"bundle"];
      if (!url) {
          return nil;
      }
@@ -177,15 +177,15 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     [[self sharedView] setStatus:status];
 }
 
-+ (void)setDefaultStyle:(SVProgressHUDStyle)style {
++ (void)setDefaultStyle:(TTDProgressHUDStyle)style {
     [self sharedView].defaultStyle = style;
 }
 
-+ (void)setDefaultMaskType:(SVProgressHUDMaskType)maskType {
++ (void)setDefaultMaskType:(TTDProgressHUDMaskType)maskType {
     [self sharedView].defaultMaskType = maskType;
 }
 
-+ (void)setDefaultAnimationType:(SVProgressHUDAnimationType)type {
++ (void)setDefaultAnimationType:(TTDProgressHUDAnimationType)type {
     [self sharedView].defaultAnimationType = type;
 }
 
@@ -227,22 +227,22 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 + (void)setForegroundColor:(UIColor*)color {
     [self sharedView].foregroundColor = color;
-    [self setDefaultStyle:SVProgressHUDStyleCustom];
+    [self setDefaultStyle:TTDProgressHUDStyleCustom];
 }
 
 + (void)setForegroundImageColor:(UIColor *)color {
     [self sharedView].foregroundImageColor = color;
-    [self setDefaultStyle:SVProgressHUDStyleCustom];
+    [self setDefaultStyle:TTDProgressHUDStyleCustom];
 }
 
 + (void)setBackgroundColor:(UIColor*)color {
     [self sharedView].backgroundColor = color;
-    [self setDefaultStyle:SVProgressHUDStyleCustom];
+    [self setDefaultStyle:TTDProgressHUDStyleCustom];
 }
 
 + (void)setHudViewCustomBlurEffect:(UIBlurEffect*)blurEffect {
     [self sharedView].hudViewCustomBlurEffect = blurEffect;
-    [self setDefaultStyle:SVProgressHUDStyleCustom];
+    [self setDefaultStyle:TTDProgressHUDStyleCustom];
 }
 
 + (void)setBackgroundLayerColor:(UIColor*)color {
@@ -312,7 +312,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 + (void)showWithStatus:(NSString*)status {
-    [self showProgress:SVProgressHUDUndefinedProgress status:status];
+    [self showProgress:TTDProgressHUDUndefinedProgress status:status];
 }
 
 + (void)showProgress:(float)progress {
@@ -385,7 +385,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     [self dismissWithDelay:0.0 completion:nil];
 }
 
-+ (void)dismissWithCompletion:(SVProgressHUDDismissCompletion)completion {
++ (void)dismissWithCompletion:(TTDProgressHUDDismissCompletion)completion {
     [self dismissWithDelay:0.0 completion:completion];
 }
 
@@ -393,7 +393,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     [self dismissWithDelay:delay completion:nil];
 }
 
-+ (void)dismissWithDelay:(NSTimeInterval)delay completion:(SVProgressHUDDismissCompletion)completion {
++ (void)dismissWithDelay:(NSTimeInterval)delay completion:(TTDProgressHUDDismissCompletion)completion {
     [[self sharedView] dismissWithDelay:delay completion:completion];
 }
 
@@ -430,16 +430,16 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         _backgroundLayerColor = [UIColor colorWithWhite:0 alpha:0.4];
         
         // Set default values
-        _defaultMaskType = SVProgressHUDMaskTypeNone;
-        _defaultStyle = SVProgressHUDStyleAutomatic;
-        _defaultAnimationType = SVProgressHUDAnimationTypeFlat;
+        _defaultMaskType = TTDProgressHUDMaskTypeNone;
+        _defaultStyle = TTDProgressHUDStyleAutomatic;
+        _defaultAnimationType = TTDProgressHUDAnimationTypeFlat;
         _minimumSize = CGSizeZero;
         _font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
         
         _imageViewSize = CGSizeMake(28.0f, 28.0f);
         _shouldTintImages = YES;
         
-        NSBundle *imageBundle = [SVProgressHUD imageBundle];
+        NSBundle *imageBundle = [TTDProgressHUD imageBundle];
         
         if (@available(iOS 13.0, *)) {
             _infoImage = [UIImage systemImageNamed:@"info.circle"];
@@ -461,8 +461,8 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         _minimumDismissTimeInterval = 5.0;
         _maximumDismissTimeInterval = CGFLOAT_MAX;
 
-        _fadeInAnimationDuration = SVProgressHUDDefaultAnimationDuration;
-        _fadeOutAnimationDuration = SVProgressHUDDefaultAnimationDuration;
+        _fadeInAnimationDuration = TTDProgressHUDDefaultAnimationDuration;
+        _fadeOutAnimationDuration = TTDProgressHUDDefaultAnimationDuration;
         
         _maxSupportedWindowLevel = UIWindowLevelNormal;
         
@@ -470,7 +470,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         _motionEffectEnabled = YES;
         
         // Accessibility support
-        self.accessibilityIdentifier = @"SVProgressHUD";
+        self.accessibilityIdentifier = @"TTDProgressHUD";
         self.isAccessibilityElement = YES;
         
         _isInitializing = NO;
@@ -513,13 +513,13 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     
     // |-spacing-content-spacing-|
-    hudWidth = SVProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + SVProgressHUDHorizontalSpacing;
+    hudWidth = TTDProgressHUDHorizontalSpacing + MAX(labelWidth, contentWidth) + TTDProgressHUDHorizontalSpacing;
     
     // |-spacing-content-(labelSpacing-label-)spacing-|
-    hudHeight = SVProgressHUDVerticalSpacing + labelHeight + contentHeight + SVProgressHUDVerticalSpacing;
+    hudHeight = TTDProgressHUDVerticalSpacing + labelHeight + contentHeight + TTDProgressHUDVerticalSpacing;
     if(self.statusLabel.text && (imageUsed || progressUsed)){
         // Add spacing if both content and label are used
-        hudHeight += SVProgressHUDLabelSpacing;
+        hudHeight += TTDProgressHUDLabelSpacing;
     }
     
     // Update values on subviews
@@ -532,20 +532,20 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     // Spinner and image view
     CGFloat centerY;
     if(self.statusLabel.text) {
-        CGFloat yOffset = MAX(SVProgressHUDVerticalSpacing, (self.minimumSize.height - contentHeight - SVProgressHUDLabelSpacing - labelHeight) / 2.0f);
+        CGFloat yOffset = MAX(TTDProgressHUDVerticalSpacing, (self.minimumSize.height - contentHeight - TTDProgressHUDLabelSpacing - labelHeight) / 2.0f);
         centerY = yOffset + contentHeight / 2.0f;
     } else {
         centerY = CGRectGetMidY(self.hudView.bounds);
     }
     self.indefiniteAnimatedView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
-    if(self.progress != SVProgressHUDUndefinedProgress) {
+    if(self.progress != TTDProgressHUDUndefinedProgress) {
         self.backgroundRingView.center = self.ringView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
     }
     self.imageView.center = CGPointMake(CGRectGetMidX(self.hudView.bounds), centerY);
 
     // Label
     if(imageUsed || progressUsed) {
-        centerY = CGRectGetMaxY(imageUsed ? self.imageView.frame : self.indefiniteAnimatedView.frame) + SVProgressHUDLabelSpacing + labelHeight / 2.0f;
+        centerY = CGRectGetMaxY(imageUsed ? self.imageView.frame : self.indefiniteAnimatedView.frame) + TTDProgressHUDLabelSpacing + labelHeight / 2.0f;
     } else {
         centerY = CGRectGetMidY(self.hudView.bounds);
     }
@@ -566,12 +566,12 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 - (void)updateMotionEffectForXMotionEffectType:(UIInterpolatingMotionEffectType)xMotionEffectType yMotionEffectType:(UIInterpolatingMotionEffectType)yMotionEffectType {
     UIInterpolatingMotionEffect *effectX = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:xMotionEffectType];
-    effectX.minimumRelativeValue = @(-SVProgressHUDParallaxDepthPoints);
-    effectX.maximumRelativeValue = @(SVProgressHUDParallaxDepthPoints);
+    effectX.minimumRelativeValue = @(-TTDProgressHUDParallaxDepthPoints);
+    effectX.maximumRelativeValue = @(TTDProgressHUDParallaxDepthPoints);
     
     UIInterpolatingMotionEffect *effectY = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:yMotionEffectType];
-    effectY.minimumRelativeValue = @(-SVProgressHUDParallaxDepthPoints);
-    effectY.maximumRelativeValue = @(SVProgressHUDParallaxDepthPoints);
+    effectY.minimumRelativeValue = @(-TTDProgressHUDParallaxDepthPoints);
+    effectY.maximumRelativeValue = @(TTDProgressHUDParallaxDepthPoints);
     
     UIMotionEffectGroup *effectGroup = [UIMotionEffectGroup new];
     effectGroup.motionEffects = @[effectX, effectY];
@@ -594,7 +594,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                 [window addSubview:self.controlView];
             }
 #else
-            // If SVProgressHUD is used inside an app extension add it to the given view
+            // If TTDProgressHUD is used inside an app extension add it to the given view
             if(self.viewForExtension) {
                 [self.viewForExtension addSubview:self.controlView];
             }
@@ -676,7 +676,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (NSDictionary*)notificationUserInfo {
-    return (self.statusLabel.text ? @{SVProgressHUDStatusUserInfoKey : self.statusLabel.text} : nil);
+    return (self.statusLabel.text ? @{TTDProgressHUDStatusUserInfoKey : self.statusLabel.text} : nil);
 }
 
 - (void)positionHUD:(NSNotification*)notification {
@@ -684,10 +684,10 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     double animationDuration = 0.0;
 
 #if !defined(SV_APP_EXTENSIONS) && TARGET_OS_IOS
-    self.frame =  [SVProgressHUD mainWindow].bounds;
+    self.frame =  [TTDProgressHUD mainWindow].bounds;
     UIInterfaceOrientation orientation = UIApplication.sharedApplication.statusBarOrientation;
 #elif !defined(SV_APP_EXTENSIONS) && !TARGET_OS_IOS
-    self.frame = [SVProgressHUD mainWindow].bounds;
+    self.frame = [TTDProgressHUD mainWindow].bounds;
 #else
     if (self.viewForExtension) {
         self.frame = self.viewForExtension.frame;
@@ -776,7 +776,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 #pragma mark - Event handling
 
 - (void)controlViewDidReceiveTouchEvent:(id)sender forEvent:(UIEvent*)event {
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDDidReceiveTouchEventNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:TTDProgressHUDDidReceiveTouchEventNotification
                                                         object:self
                                                       userInfo:[self notificationUserInfo]];
     
@@ -784,7 +784,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     CGPoint touchLocation = [touch locationInView:self];
     
     if(CGRectContainsPoint(self.hudView.frame, touchLocation)) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDDidTouchDownInsideNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:TTDProgressHUDDidTouchDownInsideNotification
                                                             object:self
                                                           userInfo:[self notificationUserInfo]];
     }
@@ -794,9 +794,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 #pragma mark - Master show/dismiss methods
 
 - (void)showProgress:(float)progress status:(NSString*)status {
-    __weak SVProgressHUD *weakSelf = self;
+    __weak TTDProgressHUD *weakSelf = self;
     void (^block)(void) = ^{
-        __strong SVProgressHUD *strongSelf = weakSelf;
+        __strong TTDProgressHUD *strongSelf = weakSelf;
         if(strongSelf){
             if(strongSelf.fadeOutTimer) {
                 strongSelf.activityCount = 0;
@@ -880,9 +880,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (void)showImage:(UIImage*)image status:(NSString*)status duration:(NSTimeInterval)duration {
-    __weak SVProgressHUD *weakSelf = self;
+    __weak TTDProgressHUD *weakSelf = self;
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        __strong SVProgressHUD *strongSelf = weakSelf;
+        __strong TTDProgressHUD *strongSelf = weakSelf;
         if(strongSelf){
             // Stop timer
             strongSelf.fadeOutTimer = nil;
@@ -892,7 +892,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             [strongSelf updateViewHierarchy];
             
             // Reset progress and cancel any running animation
-            strongSelf.progress = SVProgressHUDUndefinedProgress;
+            strongSelf.progress = TTDProgressHUDUndefinedProgress;
             [strongSelf cancelRingLayerAnimation];
             [strongSelf cancelIndefiniteAnimatedViewAnimation];
             
@@ -933,7 +933,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     // Update accessibility as well as user interaction
     // \n cause to read text twice so remove "\n" new line character before setting up accessiblity label
     NSString *accessibilityString = [[self.statusLabel.text componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
-    if(self.defaultMaskType != SVProgressHUDMaskTypeNone) {
+    if(self.defaultMaskType != TTDProgressHUDMaskTypeNone) {
         self.controlView.userInteractionEnabled = YES;
         self.accessibilityLabel =  accessibilityString ?: NSLocalizedString(@"Loading", nil);
         self.isAccessibilityElement = YES;
@@ -952,7 +952,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     // Show if not already visible
     if(self.backgroundView.alpha != 1.0f) {
         // Post notification to inform user
-        [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDWillAppearNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:TTDProgressHUDWillAppearNotification
                                                             object:self
                                                           userInfo:[self notificationUserInfo]];
         
@@ -975,7 +975,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                 [self registerNotifications];
                 
                 // Post notification to inform user
-                [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDDidAppearNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:TTDProgressHUDDidAppearNotification
                                                                     object:self
                                                                   userInfo:[self notificationUserInfo]];
                 
@@ -1028,12 +1028,12 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     [self dismissWithDelay:0.0 completion:nil];
 }
 
-- (void)dismissWithDelay:(NSTimeInterval)delay completion:(SVProgressHUDDismissCompletion)completion {
-    __weak SVProgressHUD *weakSelf = self;
+- (void)dismissWithDelay:(NSTimeInterval)delay completion:(TTDProgressHUDDismissCompletion)completion {
+    __weak TTDProgressHUD *weakSelf = self;
     // TTD 补丁：捕获 dismiss 发起时的代数号；期间若有新 show（代数变化），本次 fadeOut/清理全部作废
     NSUInteger dismissGeneration = self.displayGeneration;
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        __strong SVProgressHUD *strongSelf = weakSelf;
+        __strong TTDProgressHUD *strongSelf = weakSelf;
         if(strongSelf){
 
             // TTD 补丁：dismiss 发起后已有新 show → 本次 dismiss 直接放弃（不置 alpha、不清理）
@@ -1042,7 +1042,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             }
 
             // Post notification to inform user
-            [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDWillDisappearNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:TTDProgressHUDWillDisappearNotification
                                                                 object:nil
                                                                 userInfo:[strongSelf notificationUserInfo]];
 
@@ -1068,7 +1068,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                     [strongSelf removeFromSuperview];
                     
                     // Reset progress and cancel any running animation
-                    strongSelf.progress = SVProgressHUDUndefinedProgress;
+                    strongSelf.progress = TTDProgressHUDUndefinedProgress;
                     [strongSelf cancelRingLayerAnimation];
                     [strongSelf cancelIndefiniteAnimatedViewAnimation];
                     
@@ -1076,13 +1076,13 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
                     [[NSNotificationCenter defaultCenter] removeObserver:strongSelf];
                     
                     // Post notification to inform user
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDDidDisappearNotification
+                    [[NSNotificationCenter defaultCenter] postNotificationName:TTDProgressHUDDidDisappearNotification
                                                                         object:strongSelf
                                                                       userInfo:[strongSelf notificationUserInfo]];
                     
                     // Tell the rootViewController to update the StatusBar appearance
 #if !defined(SV_APP_EXTENSIONS) && TARGET_OS_IOS
-                    UIViewController *rootController = [SVProgressHUD mainWindow].rootViewController;
+                    UIViewController *rootController = [TTDProgressHUD mainWindow].rootViewController;
                     if (rootController) {
                         [rootController setNeedsStatusBarAppearanceUpdate];
                     }
@@ -1139,19 +1139,19 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 - (UIView*)indefiniteAnimatedView {
     // Get the correct spinner for defaultAnimationType
-    if(self.defaultAnimationType == SVProgressHUDAnimationTypeFlat){
+    if(self.defaultAnimationType == TTDProgressHUDAnimationTypeFlat){
         // Check if spinner exists and is an object of different class
-        if(_indefiniteAnimatedView && ![_indefiniteAnimatedView isKindOfClass:[SVIndefiniteAnimatedView class]]){
+        if(_indefiniteAnimatedView && ![_indefiniteAnimatedView isKindOfClass:[TTDIndefiniteAnimatedView class]]){
             [_indefiniteAnimatedView removeFromSuperview];
             _indefiniteAnimatedView = nil;
         }
         
         if(!_indefiniteAnimatedView){
-            _indefiniteAnimatedView = [[SVIndefiniteAnimatedView alloc] initWithFrame:CGRectZero];
+            _indefiniteAnimatedView = [[TTDIndefiniteAnimatedView alloc] initWithFrame:CGRectZero];
         }
         
         // Update styling
-        SVIndefiniteAnimatedView *indefiniteAnimatedView = (SVIndefiniteAnimatedView*)_indefiniteAnimatedView;
+        TTDIndefiniteAnimatedView *indefiniteAnimatedView = (TTDIndefiniteAnimatedView*)_indefiniteAnimatedView;
         indefiniteAnimatedView.strokeColor = self.foregroundImageColorForStyle;
         indefiniteAnimatedView.strokeThickness = self.ringThickness;
         indefiniteAnimatedView.radius = self.statusLabel.text ? self.ringRadius : self.ringNoTextRadius;
@@ -1175,9 +1175,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     return _indefiniteAnimatedView;
 }
 
-- (SVProgressAnimatedView*)ringView {
+- (TTDProgressAnimatedView*)ringView {
     if(!_ringView) {
-        _ringView = [[SVProgressAnimatedView alloc] initWithFrame:CGRectZero];
+        _ringView = [[TTDProgressAnimatedView alloc] initWithFrame:CGRectZero];
     }
     
     // Update styling
@@ -1188,9 +1188,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     return _ringView;
 }
 
-- (SVProgressAnimatedView*)backgroundRingView {
+- (TTDProgressAnimatedView*)backgroundRingView {
     if(!_backgroundRingView) {
-        _backgroundRingView = [[SVProgressAnimatedView alloc] initWithFrame:CGRectZero];
+        _backgroundRingView = [[TTDProgressAnimatedView alloc] initWithFrame:CGRectZero];
         _backgroundRingView.strokeEnd = 1.0f;
     }
     
@@ -1243,11 +1243,11 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (UIColor*)foregroundColorForStyle {
-    SVProgressHUDStyle style = [self defaultStyleResolvingAutomatic];
+    TTDProgressHUDStyle style = [self defaultStyleResolvingAutomatic];
     
-    if(style == SVProgressHUDStyleLight) {
+    if(style == TTDProgressHUDStyleLight) {
         return [UIColor blackColor];
-    } else if(style == SVProgressHUDStyleDark) {
+    } else if(style == TTDProgressHUDStyleDark) {
         return [UIColor whiteColor];
     } else {
         return self.foregroundColor;
@@ -1263,11 +1263,11 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (UIColor*)backgroundColorForStyle {
-    SVProgressHUDStyle style = [self defaultStyleResolvingAutomatic];
+    TTDProgressHUDStyle style = [self defaultStyleResolvingAutomatic];
 
-    if(style == SVProgressHUDStyleLight) {
+    if(style == TTDProgressHUDStyleLight) {
         return [UIColor whiteColor];
-    } else if(style == SVProgressHUDStyleDark) {
+    } else if(style == TTDProgressHUDStyleDark) {
         return [UIColor blackColor];
     } else {
         return self.backgroundColor;
@@ -1285,7 +1285,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     
     // Update frame
 #if !defined(SV_APP_EXTENSIONS)
-    _controlView.frame = [SVProgressHUD mainWindow].bounds;
+    _controlView.frame = [TTDProgressHUD mainWindow].bounds;
 #else
     _controlView.frame = [UIScreen mainScreen].bounds;
 #endif
@@ -1303,9 +1303,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     
     // Update styling
-    if(self.defaultMaskType == SVProgressHUDMaskTypeGradient){
+    if(self.defaultMaskType == TTDProgressHUDMaskTypeGradient){
         if(!_backgroundRadialGradientLayer){
-            _backgroundRadialGradientLayer = [SVRadialGradientLayer layer];
+            _backgroundRadialGradientLayer = [TTDRadialGradientLayer layer];
         }
         if(!_backgroundRadialGradientLayer.superlayer){
             [_backgroundView.layer insertSublayer:_backgroundRadialGradientLayer atIndex:0];
@@ -1315,9 +1315,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         if(_backgroundRadialGradientLayer && _backgroundRadialGradientLayer.superlayer){
             [_backgroundRadialGradientLayer removeFromSuperlayer];
         }
-        if(self.defaultMaskType == SVProgressHUDMaskTypeBlack){
+        if(self.defaultMaskType == TTDProgressHUDMaskTypeBlack){
             _backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
-        } else if(self.defaultMaskType == SVProgressHUDMaskTypeCustom){
+        } else if(self.defaultMaskType == TTDProgressHUDMaskTypeCustom){
             _backgroundView.backgroundColor = self.backgroundLayerColor;
         } else {
             _backgroundView.backgroundColor = [UIColor clearColor];
@@ -1396,9 +1396,9 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 #pragma mark - Helper
 
-- (SVProgressHUDStyle) defaultStyleResolvingAutomatic {
-    if(self.defaultStyle == SVProgressHUDStyleAutomatic) {
-        return self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? SVProgressHUDStyleDark : SVProgressHUDStyleLight;
+- (TTDProgressHUDStyle) defaultStyleResolvingAutomatic {
+    if(self.defaultStyle == TTDProgressHUDStyleAutomatic) {
+        return self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? TTDProgressHUDStyleDark : TTDProgressHUDStyleLight;
     }
     
     return self.defaultStyle;
@@ -1496,17 +1496,17 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
     
 - (void)fadeInEffects {
-    if(self.defaultStyle != SVProgressHUDStyleCustom) {
+    if(self.defaultStyle != TTDProgressHUDStyleCustom) {
         // Add blur effect
         UIBlurEffectStyle blurEffectStyle;
 #if TARGET_OS_IOS
         if (@available(iOS 13.0, *)) {
-            blurEffectStyle = [self defaultStyleResolvingAutomatic] == SVProgressHUDStyleLight ? UIBlurEffectStyleSystemMaterial : UIBlurEffectStyleSystemMaterialDark;
+            blurEffectStyle = [self defaultStyleResolvingAutomatic] == TTDProgressHUDStyleLight ? UIBlurEffectStyleSystemMaterial : UIBlurEffectStyleSystemMaterialDark;
         } else {
-            blurEffectStyle = [self defaultStyleResolvingAutomatic] == SVProgressHUDStyleLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
+            blurEffectStyle = [self defaultStyleResolvingAutomatic] == TTDProgressHUDStyleLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
         }
 #else
-        blurEffectStyle = [self defaultStyleResolvingAutomatic] == SVProgressHUDStyleLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
+        blurEffectStyle = [self defaultStyleResolvingAutomatic] == TTDProgressHUDStyleLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
 #endif
         
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:blurEffectStyle];
@@ -1533,7 +1533,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 - (void)fadeOutEffects
 {
-    if(self.defaultStyle != SVProgressHUDStyleCustom) {
+    if(self.defaultStyle != TTDProgressHUDStyleCustom) {
         // Remove blur effect
         self.hudView.effect = nil;
     }
@@ -1567,15 +1567,15 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     
 #pragma mark - UIAppearance Setters
 
-- (void)setDefaultStyle:(SVProgressHUDStyle)style {
+- (void)setDefaultStyle:(TTDProgressHUDStyle)style {
     if (!_isInitializing) _defaultStyle = style;
 }
 
-- (void)setDefaultMaskType:(SVProgressHUDMaskType)maskType {
+- (void)setDefaultMaskType:(TTDProgressHUDMaskType)maskType {
     if (!_isInitializing) _defaultMaskType = maskType;
 }
 
-- (void)setDefaultAnimationType:(SVProgressHUDAnimationType)animationType {
+- (void)setDefaultAnimationType:(TTDProgressHUDAnimationType)animationType {
     if (!_isInitializing) _defaultAnimationType = animationType;
 }
 

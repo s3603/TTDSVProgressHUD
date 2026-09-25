@@ -1,13 +1,13 @@
 //
-//  SVRadialGradientLayer.m
-//  SVProgressHUD, https://github.com/SVProgressHUD/SVProgressHUD
+//  TTDRadialGradientLayer.m
+//  TTDProgressHUD, https://github.com/TTDProgressHUD/TTDProgressHUD
 //
 //  Copyright (c) 2014-2023 Tobias Totzek and contributors. All rights reserved.
 //
 
-#import "SVRadialGradientLayer.h"
+#import "TTDRadialGradientLayer.h"
 
-@implementation SVRadialGradientLayer
+@implementation TTDRadialGradientLayer
 
 - (void)drawInContext:(CGContextRef)context {
     size_t locationsCount = 2;

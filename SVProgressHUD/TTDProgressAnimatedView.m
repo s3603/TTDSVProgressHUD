@@ -1,19 +1,19 @@
 //
-//  SVProgressAnimatedView.m
-//  SVProgressHUD, https://github.com/SVProgressHUD/SVProgressHUD
+//  TTDProgressAnimatedView.m
+//  TTDProgressHUD, https://github.com/TTDProgressHUD/TTDProgressHUD
 //
 //  Copyright (c) 2017-2023 Tobias Totzek and contributors. All rights reserved.
 //
 
-#import "SVProgressAnimatedView.h"
+#import "TTDProgressAnimatedView.h"
 
-@interface SVProgressAnimatedView ()
+@interface TTDProgressAnimatedView ()
 
 @property (nonatomic, strong) CAShapeLayer *ringAnimatedLayer;
 
 @end
 
-@implementation SVProgressAnimatedView
+@implementation TTDProgressAnimatedView
 
 - (void)willMoveToSuperview:(UIView*)newSuperview {
     if (newSuperview) {

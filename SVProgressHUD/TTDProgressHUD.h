@@ -1,6 +1,6 @@
 //
-//  SVProgressHUD.h
-//  SVProgressHUD, https://github.com/SVProgressHUD/SVProgressHUD
+//  TTDProgressHUD.h
+//  TTDProgressHUD, https://github.com/TTDProgressHUD/TTDProgressHUD
 //
 //  Copyright (c) 2011-2023 Sam Vermette and contributors. All rights reserved.
 //
@@ -8,75 +8,75 @@
 #import <UIKit/UIKit.h>
 #import <AvailabilityMacros.h>
 
-extern NSString * _Nonnull const SVProgressHUDDidReceiveTouchEventNotification;
-extern NSString * _Nonnull const SVProgressHUDDidTouchDownInsideNotification;
-extern NSString * _Nonnull const SVProgressHUDWillDisappearNotification;
-extern NSString * _Nonnull const SVProgressHUDDidDisappearNotification;
-extern NSString * _Nonnull const SVProgressHUDWillAppearNotification;
-extern NSString * _Nonnull const SVProgressHUDDidAppearNotification;
+extern NSString * _Nonnull const TTDProgressHUDDidReceiveTouchEventNotification;
+extern NSString * _Nonnull const TTDProgressHUDDidTouchDownInsideNotification;
+extern NSString * _Nonnull const TTDProgressHUDWillDisappearNotification;
+extern NSString * _Nonnull const TTDProgressHUDDidDisappearNotification;
+extern NSString * _Nonnull const TTDProgressHUDWillAppearNotification;
+extern NSString * _Nonnull const TTDProgressHUDDidAppearNotification;
 
-extern NSString * _Nonnull const SVProgressHUDStatusUserInfoKey;
+extern NSString * _Nonnull const TTDProgressHUDStatusUserInfoKey;
 
 /// Represents the appearance style of the HUD.
-typedef NS_ENUM(NSInteger, SVProgressHUDStyle) {
+typedef NS_ENUM(NSInteger, TTDProgressHUDStyle) {
     /// White HUD with black text. HUD background will be blurred.
-    SVProgressHUDStyleLight NS_SWIFT_NAME(light),
+    TTDProgressHUDStyleLight NS_SWIFT_NAME(light),
     
     /// Black HUD with white text. HUD background will be blurred.
-    SVProgressHUDStyleDark NS_SWIFT_NAME(dark),
+    TTDProgressHUDStyleDark NS_SWIFT_NAME(dark),
     
     /// Uses the fore- and background color properties.
-    SVProgressHUDStyleCustom NS_SWIFT_NAME(custom),
+    TTDProgressHUDStyleCustom NS_SWIFT_NAME(custom),
     
     /// Automatically switch between light or dark mode appearance.
-    SVProgressHUDStyleAutomatic NS_SWIFT_NAME(automatic)
+    TTDProgressHUDStyleAutomatic NS_SWIFT_NAME(automatic)
 };
 
 /// Represents the type of mask to be applied when the HUD is displayed.
-typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
+typedef NS_ENUM(NSUInteger, TTDProgressHUDMaskType) {
     /// Allow user interactions while HUD is displayed.
-    SVProgressHUDMaskTypeNone NS_SWIFT_NAME(none) = 1,
+    TTDProgressHUDMaskTypeNone NS_SWIFT_NAME(none) = 1,
     
     /// Don't allow user interactions with background objects.
-    SVProgressHUDMaskTypeClear NS_SWIFT_NAME(clear),
+    TTDProgressHUDMaskTypeClear NS_SWIFT_NAME(clear),
     
     /// Don't allow user interactions and dim the UI behind the HUD (as in iOS 7+).
-    SVProgressHUDMaskTypeBlack NS_SWIFT_NAME(black),
+    TTDProgressHUDMaskTypeBlack NS_SWIFT_NAME(black),
     
     /// Don't allow user interactions and dim the UI with an UIAlertView-like background gradient (as in iOS 6).
-    SVProgressHUDMaskTypeGradient NS_SWIFT_NAME(gradient),
+    TTDProgressHUDMaskTypeGradient NS_SWIFT_NAME(gradient),
     
     /// Don't allow user interactions and dim the UI behind the HUD with a custom color.
-    SVProgressHUDMaskTypeCustom NS_SWIFT_NAME(custom)
+    TTDProgressHUDMaskTypeCustom NS_SWIFT_NAME(custom)
 };
 
 /// Represents the animation type of the HUD when it's shown or hidden.
-typedef NS_ENUM(NSUInteger, SVProgressHUDAnimationType) {
+typedef NS_ENUM(NSUInteger, TTDProgressHUDAnimationType) {
     /// Custom flat animation (indefinite animated ring).
-    SVProgressHUDAnimationTypeFlat NS_SWIFT_NAME(flat),
+    TTDProgressHUDAnimationTypeFlat NS_SWIFT_NAME(flat),
     
     /// iOS native UIActivityIndicatorView.
-    SVProgressHUDAnimationTypeNative NS_SWIFT_NAME(native)
+    TTDProgressHUDAnimationTypeNative NS_SWIFT_NAME(native)
 };
 
-typedef void (^SVProgressHUDShowCompletion)(void);
-typedef void (^SVProgressHUDDismissCompletion)(void);
+typedef void (^TTDProgressHUDShowCompletion)(void);
+typedef void (^TTDProgressHUDDismissCompletion)(void);
 
-@interface SVProgressHUD : UIView
+@interface TTDProgressHUD : UIView
 
 #pragma mark - Customization
 
 /// Represents the default style for the HUD.
-/// @discussion Default: SVProgressHUDStyleAutomatic.
-@property (assign, nonatomic) SVProgressHUDStyle defaultStyle UI_APPEARANCE_SELECTOR;
+/// @discussion Default: TTDProgressHUDStyleAutomatic.
+@property (assign, nonatomic) TTDProgressHUDStyle defaultStyle UI_APPEARANCE_SELECTOR;
 
 /// Represents the type of mask applied when the HUD is displayed.
-/// @discussion Default: SVProgressHUDMaskTypeNone.
-@property (assign, nonatomic) SVProgressHUDMaskType defaultMaskType UI_APPEARANCE_SELECTOR;
+/// @discussion Default: TTDProgressHUDMaskTypeNone.
+@property (assign, nonatomic) TTDProgressHUDMaskType defaultMaskType UI_APPEARANCE_SELECTOR;
 
 /// Defines the animation type used when the HUD is displayed.
-/// @discussion Default: SVProgressHUDAnimationTypeFlat.
-@property (assign, nonatomic) SVProgressHUDAnimationType defaultAnimationType UI_APPEARANCE_SELECTOR;
+/// @discussion Default: TTDProgressHUDAnimationTypeFlat.
+@property (assign, nonatomic) TTDProgressHUDAnimationType defaultAnimationType UI_APPEARANCE_SELECTOR;
 
 /// The container view used for displaying the HUD. If nil, the default window level is used.
 @property (strong, nonatomic, nullable) UIView *containerView;
@@ -185,15 +185,15 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 
 /// Sets the default style for the HUD.
 /// @param style The desired style for the HUD.
-+ (void)setDefaultStyle:(SVProgressHUDStyle)style;
++ (void)setDefaultStyle:(TTDProgressHUDStyle)style;
 
 /// Sets the default mask type for the HUD.
 /// @param maskType The mask type to apply.
-+ (void)setDefaultMaskType:(SVProgressHUDMaskType)maskType;
++ (void)setDefaultMaskType:(TTDProgressHUDMaskType)maskType;
 
 /// Sets the default animation type for the HUD.
 /// @param type The desired animation type.
-+ (void)setDefaultAnimationType:(SVProgressHUDAnimationType)type;
++ (void)setDefaultAnimationType:(TTDProgressHUDAnimationType)type;
 
 /// Sets the container view for the HUD.
 /// @param containerView The view to contain the HUD.
@@ -233,22 +233,22 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 
 /// Sets the foreground color for the HUD.
 /// @param color Desired foreground color.
-/// @discussion These implicitly set the HUD's style to `SVProgressHUDStyleCustom`.
+/// @discussion These implicitly set the HUD's style to `TTDProgressHUDStyleCustom`.
 + (void)setForegroundColor:(nonnull UIColor*)color;
 
 /// Sets the foreground image color for the HUD.
 /// @param color Desired color for the image.
-/// @discussion These implicitly set the HUD's style to `SVProgressHUDStyleCustom`.
+/// @discussion These implicitly set the HUD's style to `TTDProgressHUDStyleCustom`.
 + (void)setForegroundImageColor:(nullable UIColor*)color;
 
 /// Sets the background color for the HUD.
 /// @param color Desired background color.
-/// @discussion These implicitly set the HUD's style to `SVProgressHUDStyleCustom`.
+/// @discussion These implicitly set the HUD's style to `TTDProgressHUDStyleCustom`.
 + (void)setBackgroundColor:(nonnull UIColor*)color;
 
 /// Sets a custom blur effect for the HUD view.
 /// @param blurEffect Desired blur effect.
-/// @discussion These implicitly set the HUD's style to `SVProgressHUDStyleCustom`.
+/// @discussion These implicitly set the HUD's style to `TTDProgressHUDStyleCustom`.
 + (void)setHudViewCustomBlurEffect:(nullable UIBlurEffect*)blurEffect;
 
 /// Sets the background layer color for the HUD.
@@ -368,7 +368,7 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 
 /// Dismisses the HUD and triggers a completion block.
 /// @param completion A block that gets executed after the HUD is dismissed.
-+ (void)dismissWithCompletion:(nullable SVProgressHUDDismissCompletion)completion;
++ (void)dismissWithCompletion:(nullable TTDProgressHUDDismissCompletion)completion;
 
 /// Dismisses the HUD after a specified delay.
 /// @param delay The time in seconds after which the HUD should be dismissed.
@@ -377,7 +377,7 @@ typedef void (^SVProgressHUDDismissCompletion)(void);
 /// Dismisses the HUD after a specified delay and triggers a completion block.
 /// @param delay The time in seconds after which the HUD should be dismissed.
 /// @param completion A block that gets executed after the HUD is dismissed.
-+ (void)dismissWithDelay:(NSTimeInterval)delay completion:(nullable SVProgressHUDDismissCompletion)completion;
++ (void)dismissWithDelay:(NSTimeInterval)delay completion:(nullable TTDProgressHUDDismissCompletion)completion;
 
 /// Checks if the HUD is currently visible.
 /// @return A boolean value indicating whether the HUD is visible.

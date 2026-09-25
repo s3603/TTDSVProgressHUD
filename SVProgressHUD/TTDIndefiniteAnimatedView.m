@@ -1,20 +1,20 @@
 //
-//  SVIndefiniteAnimatedView.m
-//  SVProgressHUD, https://github.com/SVProgressHUD/SVProgressHUD
+//  TTDIndefiniteAnimatedView.m
+//  TTDProgressHUD, https://github.com/TTDProgressHUD/TTDProgressHUD
 //
 //  Copyright (c) 2014-2023 Guillaume Campagna and contributors. All rights reserved.
 //
 
-#import "SVIndefiniteAnimatedView.h"
-#import "SVProgressHUD.h"
+#import "TTDIndefiniteAnimatedView.h"
+#import "TTDProgressHUD.h"
 
-@interface SVIndefiniteAnimatedView ()
+@interface TTDIndefiniteAnimatedView ()
 
 @property (nonatomic, strong) CAShapeLayer *indefiniteAnimatedLayer;
 
 @end
 
-@implementation SVIndefiniteAnimatedView
+@implementation TTDIndefiniteAnimatedView
 
 - (void)willMoveToSuperview:(UIView*)newSuperview {
     if (newSuperview) {
@@ -60,7 +60,7 @@
         
         CALayer *maskLayer = [CALayer layer];
         
-        NSBundle *imageBundle = [SVProgressHUD imageBundle];
+        NSBundle *imageBundle = [TTDProgressHUD imageBundle];
         
         maskLayer.contents = (__bridge id)[[UIImage imageNamed:@"angle-mask.png" inBundle:imageBundle compatibleWithTraitCollection:nil] CGImage];
         maskLayer.frame = _indefiniteAnimatedLayer.bounds;
