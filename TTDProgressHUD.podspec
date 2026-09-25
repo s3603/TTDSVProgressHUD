@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name     = 'TTDProgressHUD'
   s.version  = '2.3.3'
-  s.ios.deployment_target = '12.0'
-  s.tvos.deployment_target = '12.0'
+  s.ios.deployment_target = '11.0'
+  s.tvos.deployment_target = '11.0'
   s.license  =  { :type => 'MIT', :file => 'LICENSE' }
   s.summary  = 'TTD-renamed variant of SVProgressHUD with multi-scene/foldable window fixes.'
   s.homepage = 'https://github.com/s3603/TTDSVProgressHUD'
