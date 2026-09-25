@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'SVProgressHUD'
-  s.version  = '2.3.1'
+  s.version  = '2.3.2'
   s.ios.deployment_target = '12.0'
   s.tvos.deployment_target = '12.0'
   s.license  =  { :type => 'MIT', :file => 'LICENSE' }
@@ -18,8 +18,10 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |core|
     core.source_files = 'SVProgressHUD/*.{h,m}'
-    core.resources = ['SVProgressHUD/SVProgressHUD.bundle']
-    core.resource_bundles = {'SVProgressHUD' => ['SVProgressHUD/PrivacyInfo.xcprivacy']}
+    # 2026-09-25: 原 resource_bundles {'SVProgressHUD' => PrivacyInfo} 会生成与 resources
+    # 直接拷贝的 SVProgressHUD.bundle 同名产物，CocoaPods 报 Multiple commands produce，
+    # 改为统一走 resources 直接拷贝（本地 fork 改造版，上游未合并前 :path/:git 均用此 spec）
+    core.resources = ['SVProgressHUD/SVProgressHUD.bundle', 'SVProgressHUD/PrivacyInfo.xcprivacy']
   end
 
   s.subspec 'AppExtension' do |ext|
