@@ -36,6 +36,12 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 @property (nonatomic, strong) NSTimer *graceTimer;
 @property (nonatomic, strong) NSTimer *fadeOutTimer;
 
+// TTD 防竞态补丁：dismiss 的 fadeOut/清理走 dispatch_after，无法取消——
+// 「dismiss 后立刻 show」时旧清理会把新 HUD 从窗口上摘掉（SDK 链路全是毫秒级
+// dismiss→show 交替，实测 loading 显示中途消失）。show 递增代数号，
+// dismiss 捕获当时代数号，动画/清理前比对，代数不一致即放弃本次 fadeOut。
+@property (nonatomic, assign) NSUInteger displayGeneration;
+
 @property (nonatomic, strong) UIControl *controlView;
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) SVRadialGradientLayer *backgroundRadialGradientLayer;
@@ -795,10 +801,13 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             if(strongSelf.fadeOutTimer) {
                 strongSelf.activityCount = 0;
             }
-            
+
             // Stop timer
             strongSelf.fadeOutTimer = nil;
             strongSelf.graceTimer = nil;
+
+            // TTD 补丁：新一次 show → 代数号递增，使在途的旧 dismiss fadeOut/清理全部失效
+            strongSelf.displayGeneration++;
             
             // Update / Check view hierarchy to ensure the HUD is visible
             [strongSelf updateViewHierarchy];
@@ -1021,15 +1030,22 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 
 - (void)dismissWithDelay:(NSTimeInterval)delay completion:(SVProgressHUDDismissCompletion)completion {
     __weak SVProgressHUD *weakSelf = self;
+    // TTD 补丁：捕获 dismiss 发起时的代数号；期间若有新 show（代数变化），本次 fadeOut/清理全部作废
+    NSUInteger dismissGeneration = self.displayGeneration;
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         __strong SVProgressHUD *strongSelf = weakSelf;
         if(strongSelf){
-            
+
+            // TTD 补丁：dismiss 发起后已有新 show → 本次 dismiss 直接放弃（不置 alpha、不清理）
+            if(strongSelf.displayGeneration != dismissGeneration) {
+                return;
+            }
+
             // Post notification to inform user
             [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDWillDisappearNotification
                                                                 object:nil
-                                                              userInfo:[strongSelf notificationUserInfo]];
-            
+                                                                userInfo:[strongSelf notificationUserInfo]];
+
             // Reset activity count
             strongSelf.activityCount = 0;
             
@@ -1086,10 +1102,16 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
             
             dispatch_time_t dipatchTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
             dispatch_after(dipatchTime, dispatch_get_main_queue(), ^{
-                
+
                 // Stop timer
                 strongSelf.graceTimer = nil;
-                
+
+                // TTD 补丁：延迟期间发生了新 show → 放弃本次 fadeOut 动画与清理，
+                // 否则 completion 会在 alpha==0 时把正在显示的新 HUD 摘掉
+                if (strongSelf.displayGeneration != dismissGeneration) {
+                    return;
+                }
+
                 if (strongSelf.fadeOutAnimationDuration > 0) {
                     // Animate appearance
                     [UIView animateWithDuration:strongSelf.fadeOutAnimationDuration
