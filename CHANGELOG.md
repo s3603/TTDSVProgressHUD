@@ -1,3 +1,8 @@
+## Version 2.3.3
+* Fix race: pending fadeOut cleanup removes a freshly shown HUD
+* Lower minimum deployment target to iOS/tvOS 11.0 (all scene-based APIs remain guarded by @available)
+* Podspec now tracks this fork (s3603/TTDSVProgressHUD) instead of upstream
+
 ## Version 2.3.2
 * Fix iOS 13+ multi-scene window handling for proper HUD display #1113, #1114, #1152, #1153
 * Fix crashes in apps with CarPlay support #1118, #1150, #1154
