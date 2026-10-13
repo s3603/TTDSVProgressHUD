@@ -1,31 +1,30 @@
 // swift-tools-version:5.3
- 
+
 import PackageDescription
 
 let package = Package(
-    name: "SVProgressHUD",
+    name: "TTDProgressHUD",
     platforms: [
-        .iOS(.v12), 
-        .tvOS(.v12)
+        .iOS(.v11),
+        .tvOS(.v11)
     ],
     products: [
         .library(
-            name: "SVProgressHUD",
-            targets: ["SVProgressHUD"]
+            name: "TTDProgressHUD",
+            targets: ["TTDProgressHUD"]
         )
     ],
     targets: [
         .target(
-            name: "SVProgressHUD",
+            name: "TTDProgressHUD",
             dependencies: [],
             path: "SVProgressHUD",
-            exclude: ["SVProgressHUD-Prefix.pch"],
+            exclude: ["TTDProgressHUD-Prefix.pch"],
             resources: [
-                .copy("SVProgressHUD.bundle"),
+                .copy("TTDProgressHUD.bundle"),
                 .copy("PrivacyInfo.xcprivacy")
             ],
             publicHeadersPath: "include"
         )
     ]
 )
-

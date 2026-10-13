@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4A9D7DD71AB345980039B273"
-               BuildableName = "SVProgressHUD.framework"
-               BlueprintName = "SVProgressHUD-Framework"
+               BuildableName = "TTDProgressHUD.framework"
+               BlueprintName = "TTDProgressHUD-Framework"
                ReferencedContainer = "container:SVProgressHUD.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4A9D7DE11AB345990039B273"
-               BuildableName = "SVProgressHUD-FrameworkTests.xctest"
-               BlueprintName = "SVProgressHUD-FrameworkTests"
+               BuildableName = "TTDProgressHUD-FrameworkTests.xctest"
+               BlueprintName = "TTDProgressHUD-FrameworkTests"
                ReferencedContainer = "container:SVProgressHUD.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4A9D7DD71AB345980039B273"
-            BuildableName = "SVProgressHUD.framework"
-            BlueprintName = "SVProgressHUD-Framework"
+            BuildableName = "TTDProgressHUD.framework"
+            BlueprintName = "TTDProgressHUD-Framework"
             ReferencedContainer = "container:SVProgressHUD.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -56,8 +56,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4A9D7DE11AB345990039B273"
-               BuildableName = "SVProgressHUD-FrameworkTests.xctest"
-               BlueprintName = "SVProgressHUD-FrameworkTests"
+               BuildableName = "TTDProgressHUD-FrameworkTests.xctest"
+               BlueprintName = "TTDProgressHUD-FrameworkTests"
                ReferencedContainer = "container:SVProgressHUD.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -77,8 +77,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4A9D7DD71AB345980039B273"
-            BuildableName = "SVProgressHUD.framework"
-            BlueprintName = "SVProgressHUD-Framework"
+            BuildableName = "TTDProgressHUD.framework"
+            BlueprintName = "TTDProgressHUD-Framework"
             ReferencedContainer = "container:SVProgressHUD.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -93,8 +93,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4A9D7DD71AB345980039B273"
-            BuildableName = "SVProgressHUD.framework"
-            BlueprintName = "SVProgressHUD-Framework"
+            BuildableName = "TTDProgressHUD.framework"
+            BlueprintName = "TTDProgressHUD-Framework"
             ReferencedContainer = "container:SVProgressHUD.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
